@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'courses',
+    'courses.apps.CoursesConfig',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'rest_framework',
+    'drf_yasg',
 ]
 
-CKEDITOR_UPLOAD_PATH = "ckeditors/images/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -145,3 +146,4 @@ cloudinary.config(
     api_secret="5zUrFEQ6ooHMaow-rKVNSQdxZhg"
 )
 
+CKEDITOR_UPLOAD_PATH = "ckeditors/images/"

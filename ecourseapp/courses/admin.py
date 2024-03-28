@@ -1,13 +1,12 @@
 from django.contrib import admin
-from courses.models import Category, Course
+from courses.models import Course, Category, Lesson, Tag, Comment, Like
 from django.utils.html import mark_safe
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 import cloudinary
 
 
-# Register your models here.
-class CourseForm(forms.Form):
+class CourseForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget)
 
     class Meta:
@@ -16,11 +15,11 @@ class CourseForm(forms.Form):
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'active', 'created_date', 'updated_date', 'active']
-    list_display_links = ['name']
-    search_fields = ['id', 'name']
+    list_display = ['id', 'name', 'active', 'created_date', 'updated_date']
+    search_fields = ['name']
     list_filter = ['id', 'name', 'created_date']
     readonly_fields = ['my_image']
+    form = CourseForm
 
     def my_image(self, course):
         if course.image:
@@ -28,6 +27,14 @@ class CourseAdmin(admin.ModelAdmin):
                 return mark_safe(f"<img width='300' src='{course.image.url}' />")
             return mark_safe(f"<img width='300' src='/static/{course.image.name}' />")
 
+    class Media:
+        css = {
+            'all': ['/static/css/style.css']
+        }
+
 
 admin.site.register(Category)
 admin.site.register(Course, CourseAdmin)
+admin.site.register(Lesson)
+admin.site.register(Tag)
+admin.site.register(Comment)
